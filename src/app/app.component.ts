@@ -12,6 +12,7 @@ import {BOARD_SIZE, COLORS, CONTROLS} from "./constants";
 })
 export class AppComponent {
   isGamePaused: boolean = false;
+  canBePaused: boolean = true;
   board = [];
   score: number = 0;
   gameStarted: boolean = false;
@@ -44,20 +45,25 @@ export class AppComponent {
   }
 
   handleKeyboardEvents(e: KeyboardEvent) {
-    if (e.keyCode == CONTROLS.LEFT && this.snake.direction !== CONTROLS.RIGHT) {
-      this.tempDirection = CONTROLS.LEFT;
-    } else if (e.keyCode === CONTROLS.UP && this.snake.direction !== CONTROLS.DOWN) {
-      this.tempDirection = CONTROLS.UP;
-    } else if (e.keyCode === CONTROLS.RIGHT && this.snake.direction !== CONTROLS.LEFT) {
-      this.tempDirection = CONTROLS.RIGHT;
-    } else if (e.keyCode === CONTROLS.DOWN && this.snake.direction !== CONTROLS.UP) {
-      this.tempDirection = CONTROLS.DOWN;
-    } else if (e.keyCode === CONTROLS.PAUSE && !this.isGamePaused) {
-      this.isGamePaused = true;
-      // this.interval = 1000000000000000000000^10000000000000000000;
-    } else if (e.keyCode === CONTROLS.PAUSE && this.isGamePaused) {
+    if (!this.isGamePaused) {
+      if (e.keyCode == CONTROLS.LEFT && this.snake.direction !== CONTROLS.RIGHT) {
+        this.tempDirection = CONTROLS.LEFT;
+      } else if (e.keyCode === CONTROLS.UP && this.snake.direction !== CONTROLS.DOWN) {
+        this.tempDirection = CONTROLS.UP;
+      } else if (e.keyCode === CONTROLS.RIGHT && this.snake.direction !== CONTROLS.LEFT) {
+        this.tempDirection = CONTROLS.RIGHT;
+      } else if (e.keyCode === CONTROLS.DOWN && this.snake.direction !== CONTROLS.UP) {
+        this.tempDirection = CONTROLS.DOWN;
+      } else if (e.keyCode === CONTROLS.PAUSE) {
+        if (!this.canBePaused) {
+          this.gameOver();
+          return this.newGame();
+        } else {
+          this.isGamePaused = true;
+        }
+      }
+   } else if (e.keyCode === CONTROLS.PAUSE && this.isGamePaused) {
       this.isGamePaused = false;
-      this.interval = 120;
       this.updatePositions();
     }
   }
@@ -80,10 +86,12 @@ export class AppComponent {
     let me = this;
     if (this.default_mode === 'classic') {
       if (this.boardCollision(newHead)) {
+        this.canBePaused = false;
         return this.gameOver();
       }
     }
     if (this.selfCollision(newHead)) {
+      this.canBePaused = false;
       return this.gameOver();
     } else if (this.fruitCollision(newHead)) {
       this.eatFruit();
@@ -195,6 +203,7 @@ export class AppComponent {
     this.default_mode = 'classic';
     this.newBestScore = false;
     this.gameStarted = true;
+    this.canBePaused = true;
     this.score = 0;
     this.tempDirection = CONTROLS.LEFT;
     this.isGameOver = false;

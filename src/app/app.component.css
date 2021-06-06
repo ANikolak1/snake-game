@@ -23,11 +23,12 @@
 
 .game-header > .logo {
   display: inline-block;
+  text-align: center;
   padding-left: 15px;
 }
 
 .game-container {
-  width: 468px;
+  width: 506px;
   position: relative;
   display: block;
   margin: auto;
@@ -39,6 +40,7 @@
 .row {
   height: 26px;
   margin-left: 3.7%;
+  margin-right: 3.7%;
 }
 
 .column {
@@ -51,8 +53,8 @@
 .start-button {
   display: block;
   margin-left: 28.5%;
+  margin-right: 28.5%;
   padding: 15px;
-  width: 200px;
   text-align: center;
   background-color: #2ebf28;
   color: white;
@@ -73,7 +75,7 @@
   top: 0;
   width: 100%;
   bottom: 0;
-  padding: 40% 0;
+  padding: 55% 0;
   text-align: center;
   background: rgba(0, 0, 0, 0.15);
 }
@@ -104,7 +106,7 @@
   .column {
     width: 5.55%;
     height: 0;
-    padding-bottom: 5.06%;
+    padding-bottom: 5.44%;
     box-sizing: border-box;
   }
 
