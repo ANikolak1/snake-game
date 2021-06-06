@@ -20,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/snake-game",
             "index": "src/index.html",
             "main": "src/main.ts",
